@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.slin.authority.dao.UserMapper">
+
+    <!--  -->
+    <select id="findDrugStore" parameterType="java.lang.String" resultType="com.shxseer.watch.vo.DrugStoreVo">
+      SELECT
+          d.id,
+          d.category_id as categoryId,
+          (select  dc.category_name from drug_category dc  where dc.id=d.category_id ) as categoryName,
+          d.drug_name as drugName,
+          d.specification,
+          d.usagedosage,
+          d.adaptation,
+          d.taboo,
+          d.halflife_small as halflifeSmall,
+          d.halflife_big as halflifeBig,
+          d.halflife_content as halflifeContent,
+          d.disadaptation,
+          d.create_time as createTime,
+          d.create_by as createBy
+       FROM drugstore d
+       where d.id=#{id}
+    </select>
+
+    <insert id="waveSave" parameterType="com.shxseer.watch.model.WaveDataUpBean">
+      INSERT INTO wave_origin_data(
+        id,
+        imei,
+        user_id,
+        sleepy,
+        lrhand,
+        filesize,
+        datanum,
+        starttime,
+        uploadtime,
+        istestbpbs,
+        sportstatus,
+        file_url
+      )
+      VALUES (
+        #{id},
+        #{imei},
+        #{userId},
+        #{sleepy},
+        #{lrhand},
+        #{filesize},
+        #{datanum},
+        #{starttime},
+        #{uploadtime},
+        #{istestbpbs},
+        #{sportstatus},
+        #{fileUrl}
+      )
+    </insert>
+
+
+
+
+</mapper>
