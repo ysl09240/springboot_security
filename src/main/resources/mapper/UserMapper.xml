@@ -4,7 +4,7 @@
 <mapper namespace="com.slin.authority.dao.UserMapper">
 
     <!--  -->
-    <select id="findDrugStore" parameterType="java.lang.String" resultType="com.shxseer.watch.vo.DrugStoreVo">
+    <select id="findDrugStore" parameterType="java.lang.String" resultType="com.slin.authority.model.ResourceBean">
       SELECT
           d.id,
           d.category_id as categoryId,
@@ -24,7 +24,7 @@
        where d.id=#{id}
     </select>
 
-    <insert id="waveSave" parameterType="com.shxseer.watch.model.WaveDataUpBean">
+    <insert id="waveSave" parameterType="com.slin.authority.model.UserBean">
       INSERT INTO wave_origin_data(
         id,
         imei,

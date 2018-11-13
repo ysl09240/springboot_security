@@ -7,6 +7,13 @@ public class UserBean {
   private String password;
   private long age;
 
+  public UserBean(){}
+  public UserBean(String name,long age){
+    this.name = name;
+    this.age = age;
+    this.password = "1111111";
+  }
+
 
   public long getId() {
     return id;
