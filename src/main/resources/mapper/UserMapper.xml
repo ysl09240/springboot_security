@@ -4,24 +4,34 @@
 <mapper namespace="com.slin.authority.dao.UserMapper">
 
     <!--  -->
-    <select id="findDrugStore" parameterType="java.lang.String" resultType="com.slin.authority.model.ResourceBean">
+    <select id="findUserList"  resultType="com.slin.authority.model.UserBean">
       SELECT
-          d.id,
-          d.category_id as categoryId,
-          (select  dc.category_name from drug_category dc  where dc.id=d.category_id ) as categoryName,
-          d.drug_name as drugName,
-          d.specification,
-          d.usagedosage,
-          d.adaptation,
-          d.taboo,
-          d.halflife_small as halflifeSmall,
-          d.halflife_big as halflifeBig,
-          d.halflife_content as halflifeContent,
-          d.disadaptation,
-          d.create_time as createTime,
-          d.create_by as createBy
-       FROM drugstore d
-       where d.id=#{id}
+          id,
+          name,
+          password,
+          age
+       FROM  t_user
+    </select>
+
+    <!--  -->
+    <select id="getByUsername"  parameterType="java.lang.String" resultType="com.slin.authority.model.UserBean">
+      SELECT
+          id,
+          name,
+          password,
+          age
+       FROM  t_user
+       where name=#{username}
+    </select>
+
+    <select id="getRoleByUserId"  parameterType="java.lang.Long" resultType="com.slin.authority.model.RoleBean">
+      SELECT
+          t.id,
+          t.role_name as roleName,
+          t.role_en_name as roleEnName
+       FROM  t_role t
+       left join t_u_role tu on t.id = tu.role_id
+       where tu.user_id=#{userId}
     </select>
 
     <insert id="waveSave" parameterType="com.slin.authority.model.UserBean">

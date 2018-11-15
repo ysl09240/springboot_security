@@ -1,11 +1,14 @@
 package com.slin.authority.model;
 
+import java.util.List;
+
 public class UserBean {
 
   private long id;
   private String name;
   private String password;
   private long age;
+  private List<RoleBean> roles;
 
   public UserBean(){}
   public UserBean(String name,long age){
@@ -50,4 +53,11 @@ public class UserBean {
     this.age = age;
   }
 
+  public List<RoleBean> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(List<RoleBean> roles) {
+    this.roles = roles;
+  }
 }

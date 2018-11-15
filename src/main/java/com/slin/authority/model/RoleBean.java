@@ -5,6 +5,7 @@ public class RoleBean {
 
   private long id;
   private String roleName;
+  private String roleEnName;
 
 
   public long getId() {
@@ -24,4 +25,11 @@ public class RoleBean {
     this.roleName = roleName;
   }
 
+  public String getRoleEnName() {
+    return roleEnName;
+  }
+
+  public void setRoleEnName(String roleEnName) {
+    this.roleEnName = roleEnName;
+  }
 }
