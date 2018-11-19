@@ -1,4 +1,4 @@
-package com.slin.authority.Utils;
+package com.slin.authority.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

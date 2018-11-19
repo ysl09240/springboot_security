@@ -1,4 +1,4 @@
-package com.slin.authority.Utils;
+package com.slin.authority.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

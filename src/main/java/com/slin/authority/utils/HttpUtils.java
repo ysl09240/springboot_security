@@ -1,4 +1,4 @@
-package com.slin.authority.Utils;
+package com.slin.authority.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

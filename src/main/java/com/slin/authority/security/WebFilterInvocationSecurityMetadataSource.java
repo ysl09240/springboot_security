@@ -1,6 +1,5 @@
 package com.slin.authority.security;
 
-import com.slin.authority.Utils.SpringContextBeanUtils;
 import com.slin.authority.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
@@ -8,7 +7,6 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;

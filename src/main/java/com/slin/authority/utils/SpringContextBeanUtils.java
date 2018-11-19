@@ -1,4 +1,4 @@
-package com.slin.authority.Utils;
+package com.slin.authority.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
