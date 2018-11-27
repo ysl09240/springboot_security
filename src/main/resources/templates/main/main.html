@@ -30,18 +30,44 @@
     </div>
 </nav>
 <div class="container">
+    <div sec:authorize="isAuthenticated()">
     <div class="starter-template">
         <h1 th:text="${title}"></h1>
         <p class="bg-primary" th:text="${content}"></p>
         <div sec:authorize="hasRole('ROLE_ADMIN')">
             <p class="bg-info" th:text="${extraInfo}"></p>
         </div>
-        <div sec:authorize="hasRole('ROLE_USER')">
+        <div sec:authorize="hasRole('111')">
             <p class="bg-info">无更多显示信息</p>
         </div>
+        <div sec:authorize="hasRole('R_ADMIN')">
+            <p class="bg-info">权限0001可见</p>
+        </div>
+        <div sec:authorize="hasRole('MD')">
+            <p class="bg-info">权限0002可见</p>
+        </div>
+        <div sec:authorize="hasAnyAuthority('R_ADMIN')">
+            <p class="bg-info">权限0003可见</p>
+        </div>
+        <div sec:authorize="hasRole('ROLE_MD')">
+            <p class="bg-info">权限0004可见</p>
+        </div>
+        <div sec:authorize="hasAnyAuthority('ADMIN')">
+            <p class="bg-info">权限0005可见</p>
+        </div>
+        <div sec:authorize-url="/store">
+            <p class="bg-info">权限url:/store可见</p>
+        </div>
+        <div sec:authorize-url="/user/list">
+            <p class="bg-info">权限url:/user/list可见</p>
+        </div>
+        <div sec:authentication="name"></div> <!-- works fine -->
+        <div  sec:authorize="isAuthenticated()" >true</div> <!-- works fine -->
+
         <form th:action="@{/logout}" method="post">
             <input type="submit" class="btn btn-primary" value="注销"/>
         </form>
+    </div>
     </div>
 </div>
 </body>
