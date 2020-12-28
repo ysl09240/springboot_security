@@ -1,7 +1,7 @@
 package com.slin.authority.controller;
 
 import com.slin.authority.model.UserBean;
-import com.slin.authority.service.IUserService;
+import com.slin.authority.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +19,7 @@ public class UserController {
 
 
     @Autowired
-    IUserService userService;
+    UserService userService;
     @RequestMapping("/list")
     public String  listUser(Model model) {
         List<UserBean> userList =userService.findUserList();

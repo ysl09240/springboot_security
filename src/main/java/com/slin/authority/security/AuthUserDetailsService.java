@@ -2,7 +2,7 @@ package com.slin.authority.security;
 
 import com.slin.authority.model.RoleBean;
 import com.slin.authority.model.UserBean;
-import com.slin.authority.service.IUserService;
+import com.slin.authority.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -21,7 +21,7 @@ import java.util.List;
 public class AuthUserDetailsService implements UserDetailsService {
 
     @Autowired
-    IUserService userService;
+    UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

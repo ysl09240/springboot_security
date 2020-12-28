@@ -5,7 +5,7 @@ import com.slin.authority.model.UserBean;
 
 import java.util.List;
 
-public interface IUserService {
+public interface UserService {
 
 
     List<UserBean> findUserList();

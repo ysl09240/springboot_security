@@ -3,7 +3,7 @@ package com.slin.authority.service.impl;
 import com.slin.authority.dao.UserMapper;
 import com.slin.authority.model.RoleBean;
 import com.slin.authority.model.UserBean;
-import com.slin.authority.service.IUserService;
+import com.slin.authority.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @create 2018-11-13 10:19
  **/
 @Service("userService")
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
