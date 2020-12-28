@@ -29,7 +29,6 @@ public class AuthUserDetailsService implements UserDetailsService {
         if (userBean == null){
             throw new UsernameNotFoundException("用户不存在！");
         }
-
         List<RoleBean> roleBeanList = userService.getRoleByUserId(userBean.getId());
         userBean.setRoles(roleBeanList);
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities(roleBeanList);

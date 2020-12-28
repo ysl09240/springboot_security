@@ -15,7 +15,6 @@ public class LoginOutController {
 
     @RequestMapping(value = {"/","/index","/login"})
     public String login(){
-
         return "login/login";
     }
 
