@@ -117,18 +117,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
          */
 //        http.authorizeRequests().and()
 //                .formLogin()
-//                .loginPage("/login.html")
+//                .loginPage("/login")
 //                .loginProcessingUrl("/doLogin")
-//                .usernameParameter("name")
-//                .passwordParameter("password")
-//                .defaultSuccessUrl("/index")
-//                .successForwardUrl("/index")
+////                .usernameParameter("name")
+////                .passwordParameter("password")
+//                .defaultSuccessUrl("/main")
+//                .successForwardUrl("/main")
 //                .permitAll()
 //                .and()
 //                .logout()
 //                .logoutUrl("/logout")
 //                .logoutRequestMatcher(new AntPathRequestMatcher("/logout","POST"))
-//                .logoutSuccessUrl("/index")
+//                .logoutSuccessUrl("/login")
 //                .deleteCookies()
 //                .clearAuthentication(true)
 //                .invalidateHttpSession(true)
@@ -150,7 +150,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     public void configure(WebSecurity web) throws Exception {
         //指定拦截器（解决springSecurity 中为什么 sec:authorize-url 不起作用问题）并解决静态资源被拦截的问题
-        web.ignoring().antMatchers("/index.html", "/static/**", "/login", "/favicon.ico")
+        web.ignoring().antMatchers("/login","/static/**", "/favicon.ico")
                 // 给 swagger 放行；不需要权限能访问的资源
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/images/**", "/webjars/**", "/v2/api-docs", "/configuration/ui", "/configuration/security");
     }

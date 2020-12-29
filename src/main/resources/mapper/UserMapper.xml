@@ -20,17 +20,17 @@
           name,
           password,
           phone
-       FROM  t_user
+       FROM t_user
        where name=#{username}
     </select>
 
     <select id="getRoleByUserId"  parameterType="java.lang.Long" resultType="com.slin.authority.model.RoleBean">
       SELECT
-          t.user_id as userId,
+          t.role_id as roleId,
           t.role_name as roleName,
           t.role_code as roleCode
        FROM  t_role t
-       left join t_u_role tu on t.id = tu.role_id
+       left join t_user_role tu on t.role_id = tu.role_id
        where tu.user_id=#{userId}
     </select>
 

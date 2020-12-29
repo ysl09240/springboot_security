@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ public class AuthUserDetailsService implements UserDetailsService {
         List<RoleBean> roleBeanList = userService.getRoleByUserId(userBean.getUserId());
         userBean.setRoles(roleBeanList);
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities(roleBeanList);
-        return new User(userBean.getName(), userBean.getPassword(), simpleGrantedAuthorities);
+        BCryptPasswordEncoder encoder =new BCryptPasswordEncoder();
+        return new User(userBean.getName(), encoder.encode(userBean.getPassword().trim()), simpleGrantedAuthorities);
     }
 
     /**
