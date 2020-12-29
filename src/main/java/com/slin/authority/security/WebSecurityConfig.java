@@ -21,6 +21,7 @@ import org.springframework.security.web.access.DefaultWebInvocationPrivilegeEval
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -66,8 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     }
                 })
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/main")
-                .successForwardUrl("/main")
+                .formLogin().loginPage("/login").loginProcessingUrl("/doLogin")
 //                .usernameParameter("username").passwordParameter("password")
 //                .failureHandler(new MyAuthenticationFailureHandler())
 //                .successHandler(new MyAuthenticationSuccessHandler())
@@ -110,6 +110,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .permitAll()
                 .and().csrf().disable()
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
+
+
+        /**
+         * 前后端不分离配置
+         */
+//        http.authorizeRequests().and()
+//                .formLogin()
+//                .loginPage("/login.html")
+//                .loginProcessingUrl("/doLogin")
+//                .usernameParameter("name")
+//                .passwordParameter("password")
+//                .defaultSuccessUrl("/index")
+//                .successForwardUrl("/index")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout")
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout","POST"))
+//                .logoutSuccessUrl("/index")
+//                .deleteCookies()
+//                .clearAuthentication(true)
+//                .invalidateHttpSession(true)
+//                .permitAll()
+//                .and().csrf().disable()
+//                .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
 
     }
 
