@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.slin.authority.dao.RoleMapper">
+
+    <!--  -->
+    <select id="getRoleByMenuId"  resultType="com.slin.authority.model.RoleBean">
+      SELECT
+          tr.role_id as roleId,
+          tr.role_name as roleName,
+          tr.role_code as roleCode
+       FROM  t_role tr
+       LEFT JOIN t_role_menu trm on tr.role_id=trm.role_id
+       <where>
+           <if test="menuId !=null">
+               trm.menu_id=#{menuId}
+           </if>
+       </where>
+       group by tr.role_id
+    </select>
+
+
+
+</mapper>

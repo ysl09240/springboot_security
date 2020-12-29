@@ -1,8 +1,8 @@
 package com.slin.authority.security;
 
-import com.slin.authority.model.ResourceBean;
+import com.slin.authority.model.MenuBean;
+import com.slin.authority.model.RoleBean;
 import com.slin.authority.service.MenuService;
-import com.slin.authority.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +35,15 @@ public class WebFilterInvocationSecurityMetadataSource implements FilterInvocati
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         String requestUrl = ((FilterInvocation) object).getRequestUrl();
         //去数据库查询资源
-        List<ResourceBean> allMenu = menuService.getAllMenu();
-        for (ResourceBean menu : allMenu) {
+        List<MenuBean> allMenu = menuService.getAllMenu();
+        for (MenuBean menu : allMenu) {
             if (antPathMatcher.match(menu.getUrl(), requestUrl)
                     && menu.getRoles().size() > 0) {
                 List<RoleBean> roles = menu.getRoles();
                 int size = roles.size();
                 String[] values = new String[size];
                 for (int i = 0; i < size; i++) {
-                    values[i] = roles.get(i).getName();
+                    values[i] = roles.get(i).getRoleCode();
                 }
                 log.info("当前访问路径是{},这个url所需要的访问权限是{}", requestUrl, values);
                 return SecurityConfig.createList(values);

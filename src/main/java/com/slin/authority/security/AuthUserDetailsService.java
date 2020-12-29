@@ -29,7 +29,7 @@ public class AuthUserDetailsService implements UserDetailsService {
         if (userBean == null){
             throw new UsernameNotFoundException("用户不存在！");
         }
-        List<RoleBean> roleBeanList = userService.getRoleByUserId(userBean.getId());
+        List<RoleBean> roleBeanList = userService.getRoleByUserId(userBean.getUserId());
         userBean.setRoles(roleBeanList);
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = createAuthorities(roleBeanList);
         return new User(userBean.getName(), userBean.getPassword(), simpleGrantedAuthorities);
@@ -46,8 +46,9 @@ public class AuthUserDetailsService implements UserDetailsService {
 
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
         for (RoleBean role : roles) {
-            simpleGrantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleEnName()));
+            simpleGrantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleCode()));
         }
+        simpleGrantedAuthorities.add(new SimpleGrantedAuthority("ROLE_LOGIN"));
         return simpleGrantedAuthorities;
     }
 

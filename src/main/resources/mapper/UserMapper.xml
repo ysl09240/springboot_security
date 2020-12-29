@@ -6,29 +6,29 @@
     <!--  -->
     <select id="findUserList"  resultType="com.slin.authority.model.UserBean">
       SELECT
-          id,
+          user_id as userId,
           name,
           password,
-          age
+          phone
        FROM  t_user
     </select>
 
     <!--  -->
     <select id="getByUsername"  parameterType="java.lang.String" resultType="com.slin.authority.model.UserBean">
       SELECT
-          id,
+          user_id as userId,
           name,
           password,
-          age
+          phone
        FROM  t_user
        where name=#{username}
     </select>
 
     <select id="getRoleByUserId"  parameterType="java.lang.Long" resultType="com.slin.authority.model.RoleBean">
       SELECT
-          t.id,
+          t.user_id as userId,
           t.role_name as roleName,
-          t.role_en_name as roleEnName
+          t.role_code as roleCode
        FROM  t_role t
        left join t_u_role tu on t.id = tu.role_id
        where tu.user_id=#{userId}

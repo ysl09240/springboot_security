@@ -3,19 +3,17 @@ package com.slin.authority.model;
 
 public class RoleBean {
 
-  private long id;
+  private long roleId;
   private String roleName;
-  private String roleEnName;
+  private String roleCode;
 
-
-  public long getId() {
-    return id;
+  public long getRoleId() {
+    return roleId;
   }
 
-  public void setId(long id) {
-    this.id = id;
+  public void setRoleId(long roleId) {
+    this.roleId = roleId;
   }
-
 
   public String getRoleName() {
     return roleName;
@@ -25,11 +23,11 @@ public class RoleBean {
     this.roleName = roleName;
   }
 
-  public String getRoleEnName() {
-    return roleEnName;
+  public String getRoleCode() {
+    return roleCode;
   }
 
-  public void setRoleEnName(String roleEnName) {
-    this.roleEnName = roleEnName;
+  public void setRoleCode(String roleCode) {
+    this.roleCode = roleCode;
   }
 }

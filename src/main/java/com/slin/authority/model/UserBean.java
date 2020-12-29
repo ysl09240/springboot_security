@@ -4,28 +4,23 @@ import java.util.List;
 
 public class UserBean {
 
-  private long id;
+  private long userId;
   private String name;
   private String password;
-  private long age;
+  private String phone;
   private List<RoleBean> roles;
 
   public UserBean(){}
-  public UserBean(String name,long age){
-    this.name = name;
-    this.age = age;
-    this.password = "1111111";
+
+
+
+  public long getUserId() {
+    return userId;
   }
 
-
-  public long getId() {
-    return id;
+  public void setUserId(long userId) {
+    this.userId = userId;
   }
-
-  public void setId(long id) {
-    this.id = id;
-  }
-
 
   public String getName() {
     return name;
@@ -45,12 +40,12 @@ public class UserBean {
   }
 
 
-  public long getAge() {
-    return age;
+  public String getPhone() {
+    return phone;
   }
 
-  public void setAge(long age) {
-    this.age = age;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
   public List<RoleBean> getRoles() {
