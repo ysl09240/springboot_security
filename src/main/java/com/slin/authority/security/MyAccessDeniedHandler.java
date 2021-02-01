@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Component
-//自定义403响应内容
+//否定的否决的自定义403响应内容
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override

@@ -22,6 +22,10 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +61,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
          * 注意，前后端分离的情况下，配置是不同的
          * 这里是前后端分离的情况
          */
-        http.authorizeRequests()
+        http.cors().configurationSource(CorsConfigurationSource()).and()
+                .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .and()
+                .formLogin().loginProcessingUrl("/login.shtml")
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O o) {
@@ -66,11 +74,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         return o;
                     }
                 })
-                .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/doLogin")
-//                .usernameParameter("username").passwordParameter("password")
-//                .failureHandler(new MyAuthenticationFailureHandler())
-//                .successHandler(new MyAuthenticationSuccessHandler())
                 .failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
@@ -108,9 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .logoutUrl("/logout")
 //                .logoutSuccessHandler(new MyLogoutSuccessHandler())
                 .permitAll()
-                .and().csrf().disable()
-                .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
-
+                .and().csrf().disable().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
 
         /**
          * 前后端不分离配置
@@ -150,9 +151,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     public void configure(WebSecurity web) throws Exception {
         //指定拦截器（解决springSecurity 中为什么 sec:authorize-url 不起作用问题）并解决静态资源被拦截的问题
-        web.ignoring().antMatchers("/login","/static/**", "/favicon.ico")
+        web.ignoring().antMatchers("/static/**", "/favicon.ico")
                 // 给 swagger 放行；不需要权限能访问的资源
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/images/**", "/webjars/**", "/v2/api-docs", "/configuration/ui", "/configuration/security");
+    }
+
+    /*跨域原*/
+    private CorsConfigurationSource CorsConfigurationSource() {
+        CorsConfigurationSource source =   new UrlBasedCorsConfigurationSource();
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*");    //同源配置，*表示任何请求都视为同源，若需指定ip和端口可以改为如“localhost：8080”，多个以“，”分隔；
+        corsConfiguration.addAllowedHeader("*");//header，允许哪些header，本案中使用的是token，此处可将*替换为token；
+        corsConfiguration.addAllowedMethod("*");    //允许的请求方法，PSOT、GET等
+        ((UrlBasedCorsConfigurationSource) source).registerCorsConfiguration("/**",corsConfiguration); //配置允许跨域访问的url
+        return source;
     }
 
 
