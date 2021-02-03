@@ -22,9 +22,9 @@ public class CorsConfig extends CorsFilter {
 
     private static UrlBasedCorsConfigurationSource configurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        List<String> allowedHeaders = Arrays.asList("x-auth-token", "content-type", "X-Requested-With", "XMLHttpRequest");
-        List<String> exposedHeaders = Arrays.asList("x-auth-token", "content-type", "X-Requested-With", "XMLHttpRequest");
-        List<String> allowedMethods = Arrays.asList("POST", "GET", "DELETE", "PUT", "OPTIONS");
+        List<String> allowedHeaders = Arrays.asList("Access-Control-Allow-Headers", "Content-Type","Authorization", "X-Requested-With","X-auth-Token","XMLHttpRequest","X-Custom-Header");
+        List<String> exposedHeaders = Arrays.asList("Access-Control-Allow-Headers", "Content-Type","Authorization", "X-Requested-With","X-auth-Token","XMLHttpRequest","X-Custom-Header");
+        List<String> allowedMethods = Arrays.asList("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS");
         List<String> allowedOrigins = Arrays.asList("*");
         corsConfig.setAllowedHeaders(allowedHeaders);
         corsConfig.setAllowedMethods(allowedMethods);
