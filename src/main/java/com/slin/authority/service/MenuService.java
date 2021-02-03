@@ -9,4 +9,10 @@ import java.util.List;
  */
 public interface MenuService {
     List<MenuBean> getAllMenu();
+
+    /**
+     * 获取树状结构的菜单
+     * @return
+     */
+    List<MenuBean> getMenuTree();
 }

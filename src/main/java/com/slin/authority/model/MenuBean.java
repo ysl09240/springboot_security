@@ -13,6 +13,8 @@ public class MenuBean {
 
   private List<RoleBean> roles;
 
+  private List<MenuBean> childList;
+
   public long getMenuId() {
     return menuId;
   }
@@ -59,5 +61,13 @@ public class MenuBean {
 
   public void setRoles(List<RoleBean> roles) {
     this.roles = roles;
+  }
+
+  public List<MenuBean> getChildList() {
+    return childList;
+  }
+
+  public void setChildList(List<MenuBean> childList) {
+    this.childList = childList;
   }
 }

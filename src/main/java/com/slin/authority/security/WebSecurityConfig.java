@@ -4,10 +4,12 @@ package com.slin.authority.security;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,16 +18,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.DefaultWebInvocationPrivilegeEvaluator;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.CorsUtils;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -39,8 +35,10 @@ import java.io.PrintWriter;
  * @author yangsonglin
  * @create 2018-11-13 13:29
  **/
-@Configuration
 @EnableWebSecurity
+@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Order(-1)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 
@@ -55,17 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     MyAccessDeniedHandler myAccessDeniedHandler;
 
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         /**
          * 注意，前后端分离的情况下，配置是不同的
          * 这里是前后端分离的情况
          */
-        http.cors().configurationSource(CorsConfigurationSource()).and()
-                .authorizeRequests()
-                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .and()
-                .formLogin().loginProcessingUrl("/login.shtml")
+        http.authorizeRequests()
                 .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                     @Override
                     public <O extends FilterSecurityInterceptor> O postProcess(O o) {
@@ -74,6 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                         return o;
                     }
                 })
+                .and()
+                .formLogin().loginProcessingUrl("/login")
                 .failureHandler(new AuthenticationFailureHandler() {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
@@ -109,10 +106,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-//                .logoutSuccessHandler(new MyLogoutSuccessHandler())
+                .logoutSuccessHandler(new LogoutSuccessHandler(){
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        String s = "{\"status\":\"success\",\"msg\":注销成功! \"}";
+                        out.write(s);
+                        out.flush();
+                        out.close();
+                    }
+                })
                 .permitAll()
-                .and().csrf().disable().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
-
+                .and().csrf().disable().anonymous().disable().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
         /**
          * 前后端不分离配置
          */
@@ -156,16 +162,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/images/**", "/webjars/**", "/v2/api-docs", "/configuration/ui", "/configuration/security");
     }
 
-    /*跨域原*/
-    private CorsConfigurationSource CorsConfigurationSource() {
-        CorsConfigurationSource source =   new UrlBasedCorsConfigurationSource();
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*");    //同源配置，*表示任何请求都视为同源，若需指定ip和端口可以改为如“localhost：8080”，多个以“，”分隔；
-        corsConfiguration.addAllowedHeader("*");//header，允许哪些header，本案中使用的是token，此处可将*替换为token；
-        corsConfiguration.addAllowedMethod("*");    //允许的请求方法，PSOT、GET等
-        ((UrlBasedCorsConfigurationSource) source).registerCorsConfiguration("/**",corsConfiguration); //配置允许跨域访问的url
-        return source;
-    }
+
 
 
 }
