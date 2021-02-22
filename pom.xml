@@ -31,6 +31,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+
         <!-- 当引入2.1.2版本时，sec:authorize=hasRole('')失效 用以下方式引入正常 -->
         <!--Thymeleaf Spring Security (不用指定版本会自动引入高版本,目前是3.0.3,以解决sec:authorize=hasRole('')失效问题 )-->
         <dependency>

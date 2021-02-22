@@ -121,7 +121,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                     }
                 })
                 .permitAll()
-                .and().csrf().disable().anonymous().disable().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
+                .and().cors().and().csrf().disable().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
         /**
          * 前后端不分离配置
          */
